@@ -27,8 +27,8 @@
  * @param {string} s
  * @return {number}
  */
-var lengthOfLongestSubstring = function(s) {
-  let left = 0,
+var lengthOfLongestSubstring = function (s) {
+  /* let left = 0,
     right = 0;
   const window = {};
   let max = 0;
@@ -45,7 +45,32 @@ var lengthOfLongestSubstring = function(s) {
     }
     max = Math.max(max, right - left);
   }
-  return max;
+  return max; */
+  return case1(s);
 };
 
-console.log(lengthOfLongestSubstring("abcabcbb"));
+function case1(s) {
+  let i = 0,
+    j = 0,
+    max = 0;
+  const map = {};
+  while (j < s.length) {
+    const ch = s[j];
+    // 有重复字符出现
+    if (map[ch] !== undefined) {
+      i = Math.max(i, map[ch] + 1);
+      // i++;
+      console.log(i);
+    }
+    map[ch] = j;
+    max = Math.max(max, j - i + 1);
+    j++;
+  }
+  return max;
+}
+
+// console.log(lengthOfLongestSubstring("pwwkew"));
+console.log(lengthOfLongestSubstring("abba"));
+// console.log(lengthOfLongestSubstring("dvdf"));
+// console.log(lengthOfLongestSubstring("abcabcbb"));
+// console.log(lengthOfLongestSubstring("bbbbb"));
