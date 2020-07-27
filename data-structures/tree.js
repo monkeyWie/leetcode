@@ -1,9 +1,15 @@
-// 二叉树
+/**
+ * 二叉树
+ * 前、中、后序遍历其实就是根节点遍历的时候出现的位置
+ * 前序：跟->左->右
+ * 中序：左->跟->右
+ * 后序：左->右->跟
+ */
 function TreeNode(val) {
   this.val = val;
   this.left = this.right = null;
 
-  this.insert = function(val) {
+  this.insert = function (val) {
     if (val <= this.val) {
       if (this.left) {
         this.left.insert(val);
@@ -19,7 +25,7 @@ function TreeNode(val) {
     }
   };
 
-  this.find = function(val) {
+  this.find = function (val) {
     if (val == this.val) {
       return true;
     }
@@ -39,7 +45,7 @@ function TreeNode(val) {
   };
 
   //前序遍历
-  this.preOrder = function() {
+  this.preOrder = function () {
     const result = [];
     function _preOrder(node) {
       result.push(node.val);
@@ -55,7 +61,7 @@ function TreeNode(val) {
   };
 
   //中序遍历
-  this.inOrder = function() {
+  this.inOrder = function () {
     const result = [];
     function _inOrder(node) {
       if (node.left) {
@@ -71,7 +77,7 @@ function TreeNode(val) {
   };
 
   //后序遍历
-  this.postOrder = function() {
+  this.postOrder = function () {
     const result = [];
     function _postOrder(node) {
       if (node.left) {
@@ -85,9 +91,62 @@ function TreeNode(val) {
     _postOrder(this);
     return result;
   };
+
+  //非递归前序遍历
+  this.preOrderStack = function () {
+    const result = [];
+    const stack = [];
+    let root = this;
+    while (root != null || stack.length > 0) {
+      while (root) {
+        result.push(root.val);
+        stack.push(root);
+        root = root.left;
+      }
+      const node = stack.pop();
+      root = node.right;
+    }
+    return result;
+  };
+
+  //非递归中序遍历
+  this.inOrderStack = function () {
+    const result = [];
+    const stack = [];
+    let root = this;
+    while (root != null || stack.length > 0) {
+      while (root) {
+        stack.push(root);
+        root = root.left;
+      }
+      const node = stack.pop();
+      result.push(node.val);
+      root = node.right;
+    }
+    return result;
+  };
+
+  //非递归后序遍历 前序是根-左-右 后序的左-右-根 只要把前序左右顺序改变下根-右-左，再逆序就是后序遍历的结果了
+  this.postOrderStack = function () {
+    const result = [];
+    const stack = [];
+    let root = this;
+    while (root != null || stack.length > 0) {
+      while (root) {
+        result.push(root.val)
+        stack.push(root);
+        root = root.right;
+      }
+      const node = stack.pop();
+      root = node.left;
+    }
+    return result.reverse();
+  };
 }
 
-const root = new TreeNode(10);
+module.exports = TreeNode;
+
+/* const root = new TreeNode(10);
 for (const val of [28, 32, 15, 7, 9, 3]) {
   root.insert(val);
 }
@@ -95,3 +154,8 @@ for (const val of [28, 32, 15, 7, 9, 3]) {
 console.log(root.preOrder());
 console.log(root.inOrder());
 console.log(root.postOrder());
+
+console.log(root.preOrderStack());
+console.log(root.inOrderStack());
+console.log(root.postOrderStack());
+ */
