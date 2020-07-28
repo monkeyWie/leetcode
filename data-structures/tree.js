@@ -133,7 +133,7 @@ function TreeNode(val) {
     let root = this;
     while (root != null || stack.length > 0) {
       while (root) {
-        result.push(root.val)
+        result.push(root.val);
         stack.push(root);
         root = root.right;
       }
@@ -142,20 +142,48 @@ function TreeNode(val) {
     }
     return result.reverse();
   };
+
+  //非递归按层级遍历
+  this.bfsOrder = function () {
+    const result = [];
+    const queue = [this];
+    while (queue.length) {
+      let size = queue.length;
+      while (size > 0) {
+        //先进先出，取最前面的
+        const node = queue.shift();
+        result.push(node.val);
+        if (node.left) {
+          queue.push(node.left);
+        }
+        if (node.right) {
+          queue.push(node.right);
+        }
+        size--;
+      }
+    }
+    return result;
+  };
 }
 
 module.exports = TreeNode;
 
-/* const root = new TreeNode(10);
+/*
+const root = new TreeNode(10);
 for (const val of [28, 32, 15, 7, 9, 3]) {
   root.insert(val);
 }
+*/
 
+/* 
 console.log(root.preOrder());
 console.log(root.inOrder());
 console.log(root.postOrder());
+*/
 
-console.log(root.preOrderStack());
+/* console.log(root.preOrderStack());
 console.log(root.inOrderStack());
 console.log(root.postOrderStack());
+
+console.log(root.bfsOrder());
  */
