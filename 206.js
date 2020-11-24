@@ -24,7 +24,14 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
+var reverseList = function (head) {
+  return case2(head);
+};
+
+/**
+ * 迭代法双指针
+ */
+function case1(head) {
   let curr = head;
   let prev = null;
   while (curr != null) {
@@ -32,7 +39,20 @@ var reverseList = function(head) {
     head.next = prev;
     prev = temp;
   }
-};
+}
+
+/**
+ * 递归法
+ */
+function case2(head) {
+  if (!head.next) {
+    return head;
+  }
+  const curr = case2(head.next);
+  head.next.next = head;
+  head.next = null;
+  return curr;
+}
 
 function ListNode(val) {
   this.val = val;
@@ -45,4 +65,4 @@ head.next.next = new ListNode(3);
 head.next.next.next = new ListNode(4);
 head.next.next.next.next = new ListNode(5);
 
-console.log(reverseList(head));
+console.log(JSON.stringify(reverseList(head)));

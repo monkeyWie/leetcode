@@ -164,6 +164,29 @@ function TreeNode(val) {
     }
     return result;
   };
+
+  this.deserialize = function (arr) {
+    this.val = arr[0];
+    const queue = [this];
+    let index = 1;
+    while (index < arr.length) {
+      const node = queue.shift();
+
+      const leftVal = arr[index];
+      const rightVal = arr[index + 1];
+
+      if (leftVal) {
+        node.left = new TreeNode(leftVal);
+        queue.push(node.left);
+      }
+      if (rightVal) {
+        node.right = new TreeNode(rightVal);
+        queue.push(node.right);
+      }
+      index += 2;
+    }
+    return this;
+  };
 }
 
 module.exports = TreeNode;
@@ -187,3 +210,6 @@ console.log(root.postOrderStack());
 
 console.log(root.bfsOrder());
  */
+console.log(
+  JSON.stringify(new TreeNode().deserialize([3, 9, 20, null, null, 15, 7]))
+);
