@@ -1,4 +1,4 @@
-const Heap = require("../data-structures/heap");
+const Heap = require("../../data-structures/heap");
 
 /**
  * @param {number[]} nums

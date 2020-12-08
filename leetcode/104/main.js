@@ -1,4 +1,4 @@
-const TreeNode = require("../data-structures/tree");
+const TreeNode = require("../../data-structures/tree");
 
 /**
  * Definition for a binary tree node.
